@@ -5,6 +5,11 @@
     "description": "A extension that uses the Clarifai API to block images based on user inputted words",
     "version": "1.0",
 
+    "browser_action": {
+        "default_icon": "icon.png",
+        "default_popup": "popup.html"
+    },
+
     "permissions": [
           "storage"
     ],

@@ -8,7 +8,7 @@ for (i; i < images.length; i++){
   //console.log(tagsArray[i]);
   postImages.push({name: i, tags: tagsArray[i], image: images[i].src});
 }
-//console.log(postImages);
+console.log(postImages);
 
 function getCredentials(cb) {
   var data = {
@@ -21,6 +21,7 @@ function getCredentials(cb) {
     'url': 'https://api.clarifai.com/v1/token',
     'data': data,
     'type': 'POST'
+
   })
   .then(function(r) {
     localStorage.setItem('accessToken', r.access_token);
@@ -35,7 +36,6 @@ function postImage(imgurl) {
   };
   var accessToken = localStorage.getItem('accessToken');
   var tags = [];
-  console.log('before');
   $.ajax({
     'url': 'https://api.clarifai.com/v1/tag',
     'headers': {
@@ -43,15 +43,12 @@ function postImage(imgurl) {
     },
     'data': data,
     'type': 'POST',
-    async: false
+    'async': false
 
   }).then(function(r){
     tags = parseResponse(r);
-    return tags;
   });
-  console.log("after");
-  console.log(tags);
-
+      return tags;
 }
 
 function parseResponse(resp) {
@@ -62,7 +59,6 @@ function parseResponse(resp) {
   } else {
     console.log('Sorry, something is wrong.');
   }
-  console.log(tags);
   return tags;
 }
 
@@ -72,12 +68,9 @@ function run(imgurl) {
     || localStorage.getItem('accessToken') === null) {
     getCredentials(function() {
       tags = postImage(imgurl);
-      console.log(tags);
     });
   } else {
     tags = postImage(imgurl);
-    console.log(tags);
   }
-  console.log(tags);
   return tags;
 }

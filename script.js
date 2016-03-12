@@ -1,21 +1,6 @@
 var MainController = function ($scope) {
-    $scope.filters = [
-        {
-            name: 'nsfw',
-  },
-        {
-            name: 'tree',
-  },
-
-        {
-            name: 'salad',
-  },
-
-        {
-            name: 'monkey',
-  }
-]
-
+    console.log(JSON.parse(localStorage["filterArray"]));
+    $scope.filters = JSON.parse(localStorage["filterArray"]);
     $scope.addFilter = function (name) {
         if (name === undefined || name === null || name === '') {
             return;
@@ -35,13 +20,12 @@ var MainController = function ($scope) {
                 name: newFilter
             });
         }
+
+        localStorage["filterArray"] = JSON.stringify($scope.filters);
     }
 
     $scope.removeFilter = function (index) {
         $scope.filters.splice(index, 1);
-    }
-
-    $scope.saveFilters = function () {
-        localStorage.setItem("names", JSON.stringify(names));
+        localStorage["filterArray"] = JSON.stringify($scope.filters);
     }
 };

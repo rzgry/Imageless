@@ -31,6 +31,8 @@ img {
 }
 #textbox {
     width: 20em;
+    border-radius: 3px;
+    border: 1px solid #CCC;
 }
 .divider {
     height: 1px;

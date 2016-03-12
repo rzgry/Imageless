@@ -14,5 +14,8 @@
         "scripts": ["background.js"]
     },
 
-    "permissions": ["contextMenus"]
+    "permissions": [
+          "storage"
+        "contextMenus"
+    ],
 }

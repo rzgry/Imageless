@@ -1,12 +1,15 @@
-var Image = function (url, name) {
-  this.url = url;
-  this.name = name;
+function Image () {
+  this.tags ="";
 };
 
 Image.prototype.setTags = function(tags){
   this.tags = tags;
 }
+Image.prototype.setUrl = function(url){
+  this.url = url;
+}
+Image.prototype.setName = function(name){
+  this.name = name;
+}
 
-var image = new Image('sam.com', 'sam');
-image.setTags(['samm', 'yo', 'im']);
-console.log(image.tags);
+module.exports = exports = new Image();

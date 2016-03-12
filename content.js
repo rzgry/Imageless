@@ -68,7 +68,7 @@ function run(imgurl) {
       tags = postImage(imgurl);
     });
   } else {
-    tags = postImage(imgurl);
+    postImage(imgurl);
   }
   console.log(tags);
   return tags;

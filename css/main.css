@@ -1,0 +1,62 @@
+html {
+    min-width: 600px;
+    max-width: 600px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 5px;
+}
+#title {
+    padding-left: 10px;
+}
+#about {
+    font-size: 20px;
+    float: right;
+    position: relative;
+    top: 10px;
+    color: rgb(52, 73, 94);
+    padding-right: 20px;
+}
+#textbox {
+    padding: 0px;
+    padding-left: 5px;
+    width: 70%;
+}
+#submitbutton {
+    width: 27%;
+    height: 45px;
+    ;
+}
+#warningmsg {
+    font-size: 16px;
+    color: red;
+    margin-left: 100px;
+}
+ul li {
+    display: inline-block;
+}
+.label {
+    background-color: rgb(72, 201, 176);
+    margin-right: 10px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    margin-bottom: 20px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.content {
+    background-color: #f2f2f2;
+    padding: 15px;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    margin-bottom: 20px;
+}
+.header {
+    background-color: rgb(72, 201, 176);
+    padding-top: 3px;
+    padding-bottom: 5px;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    margin-bottom: 20px;
+}

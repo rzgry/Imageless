@@ -35,17 +35,23 @@ function postImage(imgurl) {
   };
   var accessToken = localStorage.getItem('accessToken');
   var tags = [];
-  return $.ajax({
+  console.log('before');
+  $.ajax({
     'url': 'https://api.clarifai.com/v1/tag',
     'headers': {
       'Authorization': 'Bearer ' + accessToken
     },
     'data': data,
-    'type': 'POST'
+    'type': 'POST',
+    async: false
+
   }).then(function(r){
     tags = parseResponse(r);
     return tags;
   });
+  console.log("after");
+  console.log(tags);
+
 }
 
 function parseResponse(resp) {
@@ -56,7 +62,7 @@ function parseResponse(resp) {
   } else {
     console.log('Sorry, something is wrong.');
   }
-  //console.log(tags);
+  console.log(tags);
   return tags;
 }
 
@@ -66,9 +72,11 @@ function run(imgurl) {
     || localStorage.getItem('accessToken') === null) {
     getCredentials(function() {
       tags = postImage(imgurl);
+      console.log(tags);
     });
   } else {
-    postImage(imgurl);
+    tags = postImage(imgurl);
+    console.log(tags);
   }
   console.log(tags);
   return tags;

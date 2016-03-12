@@ -1,13 +1,35 @@
-<html>
+<!DOCTYPE html>
+<html ng-app="app" ng-csp="">
 
 <head>
-    <title>Imageless: Customize your filters</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="angular.min.js"></script>
+    <script src="script.js"></script>
+    <script src="application.js"></script>
+    <link href="style.css" rel="stylesheet">
 </head>
 
-<body>
+<body ng-controller="MainController">
     <div>
-        <p>Test</p>
+        <div>
+            <a id="about" href="#">About</a>
+            <h2>Imageless</h2>
+            <h4>Customize your filters</h4>
+        </div>
+        <div style="clear: both" class="divider"></div>
+        <form name="Filters" ng-submit="addFilter(name)" class="text">
+            <input id="textbox" class="inputs" placeholder="Add a filter" autocomplete="off" ng-model="name" />
+            <input type="submit" class="button" value="Add Filter" class="btn">
+        </form>
+        <div>
+            <ul>
+                <li ng-repeat="filter in filters" class="filterName"> <img src="Resources/icon_delete.png" ng-click="removeFilter($index)">{{ filter.name }}
+                </li>
+            </ul>
+        </div>
+
     </div>
+
 </body>
 
 </html>

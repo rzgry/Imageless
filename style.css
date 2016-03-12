@@ -1,0 +1,42 @@
+body {
+    min-width: 300px;
+}
+h2 {
+    padding: 0px;
+    margin: 0px;
+}
+h4 {
+    padding: 0px;
+    margin: 0px;
+    color: #4d4d4d;
+}
+ul {
+    padding: 0px;
+}
+ul li {
+    display: inline-block;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    border: 1px solid #848484;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    font-size: 1.2em;
+    margin-right: 0.2em;
+    margin-top: 0.3em;
+}
+img {
+    padding-top: 0.3em;
+    padding-right: 0.3em;
+}
+#textbox {
+    width: 20em;
+}
+.divider {
+    height: 1px;
+    background-color: black;
+    margin-bottom: 0.5em;
+}
+#about {
+    float: right;
+}

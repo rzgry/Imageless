@@ -1,6 +1,10 @@
 //Javascript for the popup
 var MainController = function ($scope) {
     //load the array of filters from local storage
+    if (localStorage.getItem("filterArray") === null) {
+        var temp = [{name: 'nsfw'} , {name: 'salad'} , {name: 'monkey'} , { name: 'slimy'}]; 
+        localStorage["filterArray"] = JSON.stringify(temp);
+    }
     $scope.filters = JSON.parse(localStorage["filterArray"]);
 
     console.log(document.body);

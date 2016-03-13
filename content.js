@@ -1,18 +1,30 @@
-//This code is loaded for every website and checks for any images
-var images = document.getElementsByTagName('img');
-var i =0;
-var postImages = [];
-var tagsArray = [];
-for (i; i < images.length; i++){
-  images[i].style.opacity = "0.0";
-  //document.getElementById('body').style.display = 'none';
-  //document.getElementById('body').style.display = 'block';
-  //images[i].style.visiblilty = "false";
-  tagsArray[i] = run(images[i].src);
-  postImages.push({name: i, tags: tagsArray[i], image: images[i].src});
+_ini();
+
+function _ini(){
+
+    document.getElementsByTagName("html")[0].style.display="none";
+
+    window.onload=function(){
+
+        //This code is loaded for every website and checks for any images
+        var images = document.getElementsByTagName('img');
+        var i =0;
+        var postImages = [];
+        var tagsArray = [];
+        for (i; i < images.length; i++){
+        //images[i].style.opacity = "0.0";
+        tagsArray[i] = run(images[i].src);
+        postImages.push({name: i, tags: tagsArray[i], image: images[i].src});
+        }
+        console.log(postImages);
+        hideImage(postImages);
+        
+        document.getElementsByTagName("html")[0].style.display="block"; //to show it all back again
+    }
+
 }
-console.log(postImages);
-hideImage(postImages);
+
+
 
 //hides the function 
 function hideImage(postImages)
@@ -32,7 +44,7 @@ function hideImageHelper(filter, postImages)
       //loop through the first 5 tags of every image
       isBlocked = false;
       var length;
-      if(postImages[i].tags.length < 5)
+      if(postImages.tags == 'undefined' || postImages[i].tags.length < 5)
       {
           length = postImages[i].tags.length;
       }
@@ -48,20 +60,21 @@ function hideImageHelper(filter, postImages)
         {
           if (tagArray === filter[k].name)
           {
-            isBlocked = true;
-            break;
+            img[i].style.opacity = "0.0";
+            //isBlocked = true;
+            //break;
           }
         }
-        if(isBlocked)
+        /*if(isBlocked)
         {
           break;
-        }
+        }*/
       }
-      if(!isBlocked)
+      /*if(!isBlocked)
       {
         //delete the image
         img[i].style.opacity = "";
-      }
+      }*/
     }
 }
 

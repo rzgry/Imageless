@@ -6,14 +6,9 @@ var i =0;
 var postImages = [];
 var tagsArray = [];
 for (i; i < images.length; i++){
-<<<<<<< HEAD
-  tagsArray[i] = run(images[i].src);
-  //console.log(tagsArray[i]);
-=======
   if (images[i].width > imageWidth &&  images[i].height > imageHeight) {
     tagsArray[i] = run(images[i].src);
   }
->>>>>>> 190ed2005f1c72149ad9e574936db1174d49fc3c
   postImages.push({name: i, tags: tagsArray[i], image: images[i].src});
 }
 console.log(postImages);
@@ -23,16 +18,20 @@ hideImage(postImages);
 
 function hideImage(postImages)
 {
-  var filter
     chrome.runtime.sendMessage({method: "getStorage"}, function(response) {
     console.log(response.status);
-    filter = JSON.parse(response.status)
-   // console.log(JSON.parse(filter)[0].name);
+    var filter = JSON.parse(response.status)
+    //return filter//console.log(JSON.parse(filter)[0].name);
     //console.log(JSON.parse(filter).Object.name);
     //console.log(JSON.parse(filter).Object);
+    hideImageHelper(filter, postImages);
     });
+}
+function hideImageHelper(filter, postImages)
+{
+    console.log(filter[1].name);
     //var filter = JSON.parse(localStorage["filterArray"]);
-    console.log(localStorage["filterArray"]);
+    //console.log(localStorage["filterArray"]);
     var img = document.getElementsByTagName("img");
     //loop through each image
     for (var i = 0; i < img.length; i++) {

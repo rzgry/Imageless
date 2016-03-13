@@ -5,14 +5,19 @@ var postImages = [];
 var tagsArray = [];
 for (i; i < images.length; i++){
   tagsArray[i] = run(images[i].src);
-  //console.log(tagsArray[i]);
+  console.log(tagsArray[i]);
   postImages.push({name: i, tags: tagsArray[i], image: images[i].src});
 }
+
 hideImage(postImages);
 //console.log(postImages);
 
 function hideImage(postImages)
 {
+    chrome.runtime.sendMessage({method: "getStorage"}, function(response) {
+    console.log(response.status);
+    var filter = response.status
+    });
     //var filter = JSON.parse(localStorage["filterArray"]);
     console.log(localStorage["filterArray"])
     var img = document.getElementsByTagName("img");
@@ -35,7 +40,7 @@ function hideImage(postImages)
         }
       }
       else{*/
-        for(var j = 0; j < 5; j++)
+        for(var j = 1; j < 5; j++)
         {
         var tagArray = postImages[i].tagsArray[j];
           for(var k = 0; k < filter.length; k++)
@@ -62,6 +67,7 @@ function getCredentials(cb) {
     'url': 'https://api.clarifai.com/v1/token',
     'data': data,
     'type': 'POST'
+
   })
   .then(function(r) {
     localStorage.setItem('accessToken', r.access_token);
@@ -76,7 +82,6 @@ function postImage(imgurl) {
   };
   var accessToken = localStorage.getItem('accessToken');
   var tags = [];
-  console.log('before');
   $.ajax({
     'url': 'https://api.clarifai.com/v1/tag',
     'headers': {
@@ -84,15 +89,12 @@ function postImage(imgurl) {
     },
     'data': data,
     'type': 'POST',
-    async: false
+    'async': false
 
   }).then(function(r){
     tags = parseResponse(r);
-    return tags;
   });
-  console.log("after");
-  console.log(tags);
-
+      return tags;
 }
 
 function parseResponse(resp) {
@@ -103,7 +105,6 @@ function parseResponse(resp) {
   } else {
     console.log('Sorry, something is wrong.');
   }
-  console.log(tags);
   return tags;
 }
 
@@ -113,12 +114,9 @@ function run(imgurl) {
     || localStorage.getItem('accessToken') === null) {
     getCredentials(function() {
       tags = postImage(imgurl);
-      console.log(tags);
     });
   } else {
     tags = postImage(imgurl);
-    console.log(tags);
   }
-  console.log(tags);
   return tags;
 }

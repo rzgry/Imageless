@@ -7,33 +7,33 @@
     <script src="Resources/js/angular.min.js"></script>
     <script src="script.js"></script>
     <script src="application.js"></script>
-    <link href="css/style.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-</head>
-<!--Body-->
+    <link href="css/main.css" rel="stylesheet">
+    <link href="css/flat-ui.css" rel="stylesheet">
+    <!--Body-->
 
-<body ng-controller="MainController">
-    <div>
-        <div class="titles">
-            <a id="about" href="#">About</a>
-            <h2 class="titletext">Imageless</h2>
-            <h4 class="titletext">Customize your filters</h4>
-        </div>
-        <!-- form to add filters to the filter array -->
-        <form name="Filters" ng-submit="addFilter(name)" class="text">
-            <input id="textbox" class="inputs form-control" placeholder="New filter" autocomplete="off" ng-model="name" style="float: left" />
-            <input id="submitbutton" type="submit" class="button btn" value="Add Filter" class="btn" style="float: right">
-        </form>
+    <body ng-controller="MainController">
         <div>
-            <ul>
-                <!--Repeat for all filters in the filter array-->
-                <li ng-repeat="filter in filters  track by $index" class="label label-primary filterName"> <img src="Resources/Images/icon_delete.png" ng-click="removeFilter($index)">{{ filter.name }}
-                </li>
-            </ul>
+            <div class="header">
+                <h3 id="title" class="titletext">Image-less                <a id="about" href="about.html">About</a></h3>
+            </div>
+            <div class="content">
+                <h5 class="titletext">Customize your
+                    filters! <span id="warningmsg"></span></h5>
+                <!-- form to add filters to the filter array -->
+                <form name="Filters" ng-submit="addFilter(name)" class="text">
+                    <input id="textbox" class="inputs form-control" placeholder="New filter" autocomplete="off" ng-model="name" />
+                    <input id="submitbutton" type="submit" class="button btn btn-primary" value="Add Filter">
+                </form>
+                <div>
+                    <ul>
+                        <!--Repeat for all filters in the filter array-->
+                        <li ng-repeat="filter in filters  track by $index" class="label"> <img src="Resources/Images/icon_delete.png" ng-click="removeFilter($index)">{{ filter.name }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
 
-    </div>
-
-</body>
+    </body>
 
 </html>

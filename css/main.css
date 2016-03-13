@@ -63,3 +63,7 @@ ul li {
 p {
     color: rgb(26, 188, 156);
 }
+img {
+    padding-top: 10px;
+    margin-right: 2px;
+}

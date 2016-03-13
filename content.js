@@ -4,9 +4,12 @@ var i =0;
 var postImages = [];
 var tagsArray = [];
 for (i; i < images.length; i++){
+  images[i].style.opacity = "0.0";
+  //document.getElementById('body').style.display = 'none';
+  //document.getElementById('body').style.display = 'block';
+  //images[i].style.visiblilty = "false";
   tagsArray[i] = run(images[i].src);
   postImages.push({name: i, tags: tagsArray[i], image: images[i].src});
-  images[i].style.opacity = "0.0";
 }
 console.log(postImages);
 hideImage(postImages);

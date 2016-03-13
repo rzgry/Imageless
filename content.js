@@ -1,17 +1,12 @@
 //This code is loaded for every website and checks for any images
 var images = document.getElementsByTagName('img');
-var imageWidth = 0;
-var imageHeight = 0;
 var i =0;
 var postImages = [];
 var tagsArray = [];
 for (i; i < images.length; i++){
-  if (images[i].width > imageWidth ||  images[i].height > imageHeight) {
-    tagsArray[i] = run(images[i].src);
-  }
+  tagsArray[i] = run(images[i].src);
   postImages.push({name: i, tags: tagsArray[i], image: images[i].src});
 }
-console.log(postImages);
 
 hideImage(postImages);
 //console.log(postImages);

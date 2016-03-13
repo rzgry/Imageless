@@ -8,7 +8,48 @@ for (i; i < images.length; i++){
   //console.log(tagsArray[i]);
   postImages.push({name: i, tags: tagsArray[i], image: images[i].src});
 }
+hideImage(postImages);
 //console.log(postImages);
+
+function hideImage(postImages)
+{
+    //var filter = JSON.parse(localStorage["filterArray"]);
+    console.log(localStorage["filterArray"])
+    var img = document.getElementsByTagName("img");
+    //loop through each image
+    for (var i = 0; i < img.length; i++) {
+      //loop through the first 5 tags of every image
+      /*if(postImages.tagsArray.length < 5)
+      {
+        for(var j = 0; j < postImages.tagsArray.length; j++)
+        {
+          var tagArray = postImages[i].tagsArray[j];
+           for(var k = 0; k < filter.length; k++)
+           {
+              if (tagArray === fliter[k])
+              {
+                 //delete the image
+                 img[i].style.opacity = "0.0";
+              }
+           }
+        }
+      }
+      else{*/
+        for(var j = 0; j < 5; j++)
+        {
+        var tagArray = postImages[i].tagsArray[j];
+          for(var k = 0; k < filter.length; k++)
+          {
+           if (tagArray === fliter[k])
+           {
+              //delete the image
+              img[i].style.opacity = "0.0";
+            }
+          }
+        }
+      //}
+    } 
+}
 
 function getCredentials(cb) {
   var data = {

@@ -5,7 +5,7 @@ var postImages = [];
 var tagsArray = [];
 for (i; i < images.length; i++){
   tagsArray[i] = run(images[i].src);
-  console.log(tagsArray[i]);
+  //console.log(tagsArray[i]);
   postImages.push({name: i, tags: tagsArray[i], image: images[i].src});
 }
 
@@ -14,12 +14,16 @@ hideImage(postImages);
 
 function hideImage(postImages)
 {
+  var filter
     chrome.runtime.sendMessage({method: "getStorage"}, function(response) {
     console.log(response.status);
-    var filter = response.status
+    filter = JSON.parse(response.status)
+   // console.log(JSON.parse(filter)[0].name);
+    //console.log(JSON.parse(filter).Object.name);
+    //console.log(JSON.parse(filter).Object);
     });
     //var filter = JSON.parse(localStorage["filterArray"]);
-    console.log(localStorage["filterArray"])
+    console.log(localStorage["filterArray"]);
     var img = document.getElementsByTagName("img");
     //loop through each image
     for (var i = 0; i < img.length; i++) {
@@ -40,12 +44,17 @@ function hideImage(postImages)
         }
       }
       else{*/
+        //console.log(postImages.peek());
+        //var finalImage = postImages.pop();
+        //console.log(finalImage);
         for(var j = 1; j < 5; j++)
         {
-        var tagArray = postImages[i].tagsArray[j];
+          var tagArray = postImages[i].tags[j];
+          //tagArray = finalImage.tags;
+          console.log(tagArray);
           for(var k = 0; k < filter.length; k++)
           {
-           if (tagArray === fliter[k])
+           if (tagArray === filter[k].name)
            {
               //delete the image
               img[i].style.opacity = "0.0";

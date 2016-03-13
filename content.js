@@ -1,13 +1,22 @@
 //This code is loaded for every website and checks for any images
 var images = document.getElementsByTagName('img');
+var imageWidth = 100;
+var imageHeight = 100;
 var i =0;
 var postImages = [];
 var tagsArray = [];
 for (i; i < images.length; i++){
+<<<<<<< HEAD
   tagsArray[i] = run(images[i].src);
   //console.log(tagsArray[i]);
+=======
+  if (images[i].width > imageWidth &&  images[i].height > imageHeight) {
+    tagsArray[i] = run(images[i].src);
+  }
+>>>>>>> 190ed2005f1c72149ad9e574936db1174d49fc3c
   postImages.push({name: i, tags: tagsArray[i], image: images[i].src});
 }
+console.log(postImages);
 
 hideImage(postImages);
 //console.log(postImages);
@@ -62,7 +71,7 @@ function hideImage(postImages)
           }
         }
       //}
-    } 
+    }
 }
 
 function getCredentials(cb) {

@@ -6,62 +6,59 @@ var tagsArray = [];
 for (i; i < images.length; i++){
   tagsArray[i] = run(images[i].src);
   postImages.push({name: i, tags: tagsArray[i], image: images[i].src});
+  images[i].style.opacity = "0.0";
 }
-
+console.log(postImages);
 hideImage(postImages);
 
 //hides the function 
 function hideImage(postImages)
 {
-    chrome.runtime.sendMessage({method: "getStorage"}, function(response) {
-    console.log(response.status);
+    chrome.runtime.sendMessage({method: "getStorage"}, function(response) {   
     var filter = JSON.parse(response.status)
     hideImageHelper(filter, postImages);
     });
 }
 function hideImageHelper(filter, postImages)
 {
-    //console.log(filter[1].name);
-    //var filter = JSON.parse(localStorage["filterArray"]);
-    //console.log(localStorage["filterArray"]);
+    var isBlocked
     var img = document.getElementsByTagName("img");
     //loop through each image
-    for (var i = 0; i < img.length; i++) {
+    for (var i = 0; i < img.length; i++) 
+    {
       //loop through the first 5 tags of every image
-      /*if(postImages.tagsArray.length < 5)
+      isBlocked = false;
+      var length;
+      if(postImages[i].tags.length < 5)
       {
-        for(var j = 0; j < postImages.tagsArray.length; j++)
-        {
-          var tagArray = postImages[i].tagsArray[j];
-           for(var k = 0; k < filter.length; k++)
-           {
-              if (tagArray === fliter[k])
-              {
-                 //delete the image
-                 img[i].style.opacity = "0.0";
-              }
-           }
-        }
+          length = postImages[i].tags.length;
       }
-      else{*/
-        //console.log(postImages.peek());
-        //var finalImage = postImages.pop();
-        //console.log(finalImage);
-        for(var j = 0; j < 5; j++)
+      else
+      {
+        length = 5;
+      }
+      for(var j = 0; j < length; j++)
+      {
+        var tagArray = postImages[i].tags[j];
+        //tagArray = finalImage.tags;
+        for(var k = 0; k < filter.length; k++)
         {
-          var tagArray = postImages[i].tags[j];
-          //tagArray = finalImage.tags;
-          console.log(tagArray);
-          for(var k = 0; k < filter.length; k++)
+          if (tagArray === filter[k].name)
           {
-           if (tagArray === filter[k].name)
-           {
-              //delete the image
-              img[i].style.opacity = "0.0";
-            }
+            isBlocked = true;
+            break;
           }
         }
-      //}
+        if(isBlocked)
+        {
+          break;
+        }
+      }
+      if(!isBlocked)
+      {
+        //delete the image
+        img[i].style.opacity = "";
+      }
     }
 }
 

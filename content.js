@@ -2,7 +2,7 @@ _ini();
 
 function _ini(){
 
-    document.getElementsByTagName("html")[0].style.display="none";
+    //document.getElementsByTagName("html")[0].style.display="none";
 
     window.onload=function(){
 
@@ -11,26 +11,88 @@ function _ini(){
         var i =0;
         var postImages = [];
         var tagsArray = [];
-        for (i; i < images.length; i++){
-        //images[i].style.opacity = "0.0";
-        tagsArray[i] = run(images[i].src);
-        postImages.push({name: i, tags: tagsArray[i], image: images[i].src});
+        var isRead = [];
+        for (var j = 0; j < images.length; j++){
+          isRead[j] = false;
         }
-        console.log(postImages);
-        hideImage(postImages);
-        
+        var special = jQuery.event.special,
+                uid1 = 'D' + (+new Date()),
+                uid2 = 'D' + (+new Date() + 1);
+            special.scrollstart = {
+                setup: function() {
+                    var timer,
+                        handler =  function(evt) {
+                            var _self = this,
+                                _args = arguments;
+                            if (timer) {
+                                clearTimeout(timer);
+                            } else {
+                                evt.type = 'scrollstart';
+                                console.log("start");
+                            }
+                            timer = setTimeout( function(){
+                                timer = null;
+                            }, special.scrollstop.latency);
+                        };
+                    jQuery(this).bind('scroll', handler).data(uid1, handler);
+                },
+                teardown: function(){
+                    jQuery(this).unbind( 'scroll', jQuery(this).data(uid1) );
+                }
+            };
+            special.scrollstop = {
+                latency: 300,
+                setup: function() {
+                    var timer,
+                            handler = function(evt) {
+                            var _self = this,
+                                _args = arguments;
+                            if (timer) {
+                                clearTimeout(timer);
+                            }
+                            timer = setTimeout( function(){
+                                timer = null;
+                                evt.type = 'scrollstop';
+                                console.log("stop");
+                                checkImages();
+                            }, special.scrollstop.latency);
+                        };
+                    jQuery(this).bind('scroll', handler).data(uid2, handler);
+                },
+                teardown: function() {
+                    jQuery(this).unbind( 'scroll', jQuery(this).data(uid2) );
+                }
+            };
+        jQuery(window).bind('scrollstart', function(){});
+        jQuery(window).bind('scrollstop', function(e){});
+        checkImages();
+
+
         document.getElementsByTagName("html")[0].style.display="block"; //to show it all back again
+
+        function checkImages() {
+          for (var j = 0; j < images.length; j++){
+          if (isScrolledIntoView(images[j]) === true && isRead[j] === false) {
+            console.log("found image: " + j);
+            isRead[j] = true;
+            tagsArray[j] = run(images[j].src);
+            postImages.push({name: j, tags: tagsArray[j], image: images[j].src});
+            }
+          }
+          console.log(postImages);
+          hideImage(postImages);
+        }
     }
 
 }
 
 
 
-//hides the function 
+//hides the function
 function hideImage(postImages)
 {
-    chrome.runtime.sendMessage({method: "getStorage"}, function(response) {   
-    var filter = JSON.parse(response.status)
+    chrome.runtime.sendMessage({method: "getStorage"}, function(response) {
+    var filter = JSON.parse(response.status);
     hideImageHelper(filter, postImages);
     });
 }
@@ -39,7 +101,7 @@ function hideImageHelper(filter, postImages)
     var isBlocked
     var img = document.getElementsByTagName("img");
     //loop through each image
-    for (var i = 0; i < img.length; i++) 
+    for (var i = 0; i < img.length; i++)
     {
       //loop through the first 5 tags of every image
       isBlocked = false;
@@ -141,4 +203,16 @@ function run(imgurl) {
     tags = postImage(imgurl);
   }
   return tags;
+}
+
+function isScrolledIntoView(elem)
+{
+  var $elem = $(elem);
+  var $window = $(window);
+  var docViewTop = $window.scrollTop();
+  var docViewBottom = docViewTop + 2*$window.height();
+  console.log($window.height());
+  var elemTop = $elem.offset().top;
+  var elemBottom = elemTop + $elem.height();
+  return (elemTop <= docViewBottom);
 }

@@ -1,14 +1,68 @@
 //This code is loaded for every website and checks for any images
 var images = document.getElementsByTagName('img');
 var i =0;
+var update = false;
+var isRead = [];
+for (var j = 0; j < images.length; j++){
+  isRead[j] = false;
+}
 var postImages = [];
 var tagsArray = [];
-for (i; i < images.length; i++){
-  tagsArray[i] = run(images[i].src);
-  postImages.push({name: i, tags: tagsArray[i], image: images[i].src});
-}
+var special = jQuery.event.special,
+        uid1 = 'D' + (+new Date()),
+        uid2 = 'D' + (+new Date() + 1);
+    special.scrollstart = {
+        setup: function() {
+            var timer,
+                handler =  function(evt) {
+                    var _self = this,
+                        _args = arguments;
+                    if (timer) {
+                        clearTimeout(timer);
+                    } else {
+                        evt.type = 'scrollstart';
+                        console.log("start");
 
-hideImage(postImages);
+                    }
+                    timer = setTimeout( function(){
+                        timer = null;
+                    }, special.scrollstop.latency);
+                };
+            jQuery(this).bind('scroll', handler).data(uid1, handler);
+        },
+        teardown: function(){
+            jQuery(this).unbind( 'scroll', jQuery(this).data(uid1) );
+        }
+    };
+    special.scrollstop = {
+        latency: 300,
+        setup: function() {
+            var timer,
+                    handler = function(evt) {
+                    var _self = this,
+                        _args = arguments;
+                    if (timer) {
+                        clearTimeout(timer);
+                    }
+                    timer = setTimeout( function(){
+                        timer = null;
+                        evt.type = 'scrollstop';
+                        console.log("stop");
+                        checkImages();
+                    }, special.scrollstop.latency);
+                };
+            jQuery(this).bind('scroll', handler).data(uid2, handler);
+        },
+        teardown: function() {
+            jQuery(this).unbind( 'scroll', jQuery(this).data(uid2) );
+        }
+    };
+
+jQuery(window).bind('scrollstart', function(){});
+
+jQuery(window).bind('scrollstop', function(e){});
+
+
 //console.log(postImages);
 
 function hideImage(postImages)
@@ -130,5 +184,31 @@ function run(imgurl) {
   } else {
     tags = postImage(imgurl);
   }
+  console.log(tags);
   return tags;
 }
+
+function isScrolledIntoView(elem)
+{
+  var $elem = $(elem);
+  var $window = $(window);
+  var docViewTop = $window.scrollTop();
+  var docViewBottom = docViewTop + $window.height() + ($window.height()/2);
+  console.log(($window.height() + $window.height()/2));
+  var elemTop = $elem.offset().top;
+  var elemBottom = elemTop + $elem.height();
+  return (elemTop <= docViewBottom);
+}
+function checkImages() {
+  for (var j = 0; j < images.length; j++){
+  if (isScrolledIntoView(images[j]) === true && isRead[j] === false) {
+    console.log("found image: " + j);
+    isRead[j] = true;
+    tagsArray[j] = run(images[j].src);
+    postImages.push({name: j, tags: tagsArray[j], image: images[j].src});
+    }
+  }
+  hideImage(postImages);
+}
+
+checkImages();

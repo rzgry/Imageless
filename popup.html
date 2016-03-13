@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html ng-app="app" ng-csp="">
 <!--Head-->
-
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="Resources/js/angular.min.js"></script>
-    <script src="script.js"></script>
+    <script src="popup-controller.js"></script>
     <script src="application.js"></script>
     <link href="css/main.css" rel="stylesheet">
     <link href="css/flat-ui.css" rel="stylesheet">
-    <!--Body-->
-
+    <!--Body which is controlled by the Angular Main Controller-->
     <body ng-controller="MainController">
         <div>
             <div class="header">
@@ -21,12 +19,14 @@
                     filters! <span id="warningmsg"></span></h5>
                 <!-- form to add filters to the filter array -->
                 <form name="Filters" ng-submit="addFilter(name)" class="text">
+                    <!--Textbox that provides the Main Controller the name of the filter we are adding-->
                     <input id="textbox" class="inputs form-control" placeholder="New filter" autocomplete="off" ng-model="name" />
+                    <!--Button that calls the addFilter method in the Main Controller-->
                     <input id="submitbutton" type="submit" class="button btn btn-primary" value="Add Filter">
                 </form>
                 <div>
                     <ul>
-                        <!--Repeat for all filters in the filter array-->
+                        <!--Repeat and list for all filters in the filter array-->
                         <li ng-repeat="filter in filters  track by $index" class="label"> <img src="Resources/Images/icon_delete.png" ng-click="removeFilter($index)">{{ filter.name }}
                         </li>
                     </ul>

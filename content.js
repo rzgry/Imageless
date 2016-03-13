@@ -29,7 +29,7 @@ function hideImage(postImages)
 }
 function hideImageHelper(filter, postImages)
 {
-    console.log(filter[1].name);
+    //console.log(filter[1].name);
     //var filter = JSON.parse(localStorage["filterArray"]);
     //console.log(localStorage["filterArray"]);
     var img = document.getElementsByTagName("img");

@@ -14,22 +14,19 @@ for (i; i < images.length; i++){
 console.log(postImages);
 
 hideImage(postImages);
-//console.log(postImages);
 
+//hides the function 
 function hideImage(postImages)
 {
     chrome.runtime.sendMessage({method: "getStorage"}, function(response) {
     console.log(response.status);
     var filter = JSON.parse(response.status)
-    //return filter//console.log(JSON.parse(filter)[0].name);
-    //console.log(JSON.parse(filter).Object.name);
-    //console.log(JSON.parse(filter).Object);
     hideImageHelper(filter, postImages);
     });
 }
 function hideImageHelper(filter, postImages)
 {
-    console.log(filter[1].name);
+    //console.log(filter[1].name);
     //var filter = JSON.parse(localStorage["filterArray"]);
     //console.log(localStorage["filterArray"]);
     var img = document.getElementsByTagName("img");

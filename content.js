@@ -55,7 +55,7 @@ function hideImageHelper(filter, postImages)
         //console.log(postImages.peek());
         //var finalImage = postImages.pop();
         //console.log(finalImage);
-        for(var j = 1; j < 5; j++)
+        for(var j = 0; j < 5; j++)
         {
           var tagArray = postImages[i].tags[j];
           //tagArray = finalImage.tags;
